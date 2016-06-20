@@ -1,0 +1,10 @@
+{
+  "type": "object",
+  "properties": {
+    "houndBaseUrl": {
+      "type": "string",
+      "title": "Hound Base Url",
+      "default": "http://houndserver:port"
+    }
+  }
+}

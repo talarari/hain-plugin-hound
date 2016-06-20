@@ -1,0 +1,34 @@
+{
+  "name": "hain-plugin-hound",
+  "version": "1.0.0",
+  "description": "hound plugin for hain",
+  "main": "./lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/talarari/hain-plugin-hound"
+  },
+  "keywords": [
+    "hain-0.4.0"
+  ],
+  "author": "talarari",
+  "license": "MIT",
+  "hain": {
+    "prefix": "/hound ",
+    "usage": "/hound search term",
+    "icon": "./icon.png",
+    "redirect": "/hound"
+  },
+  "dependencies": {
+    "axios": "^0.12.0",
+    "mustache": "^2.2.1",
+    "node-uuid": "^1.4.7"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.9.0",
+    "babel-preset-es2015": "^6.9.0"
+  },
+  "scripts": {
+    "compile": "babel --presets es2015 -d lib/ src/",
+    "prepublish": "npm run compile"
+  }
+}
