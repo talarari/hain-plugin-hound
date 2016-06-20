@@ -1,6 +1,6 @@
 {
   "name": "hain-plugin-hound",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "hound plugin for hain",
   "main": "./lib/index.js",
   "repository": {
