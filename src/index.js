@@ -119,7 +119,7 @@ module.exports = (pluginContext) => {
                         return {
                             id: id,
                             title: displayFileName,
-                            group:`showing 5 of ${results[repoName].FilesWithMatch} matches found`,
+                            group:`${repoName}:showing 5/${results[repoName].FilesWithMatch} matches`,
                             payload: {
                             action :'open',
                                 fileMatch,
