@@ -123,7 +123,7 @@ module.exports = (pluginContext) => {
                             payload: {
                             action :'open',
                                 fileMatch,
-                                url : results[repoName].repoUrl
+                                url : `${results[repoName].repoUrl.replace('.git','')}/tree/master/${fileMatch.Filename}`
                             },
                             preview:true
                         };
@@ -182,28 +182,23 @@ module.exports = (pluginContext) => {
         if (!payload.fileMatch) return;
 
         var lines ={};
-        var shortestLeftPadding = 999999;
-        const setShortestLeftPadding = (line)=> shortestLeftPadding = (line.length > 0 && line.length < shortestLeftPadding ) ? line.length :shortestLeftPadding;
 
-
+        // merge all lines to unique by line number, data has duplicates between different matchs
         payload.fileMatch.Matches.forEach(lineMatch=>{
-
             // add before
             for(var i=0; i< lineMatch.Before.length;i++){
                 lines[lineMatch.LineNumber - lineMatch.Before.length + i] = lineMatch.Before[i];
-                setShortestLeftPadding(lineMatch.Before[i]);
             }
 
             lines[lineMatch.LineNumber] = lineMatch.Line;
-            setShortestLeftPadding(lineMatch.Line);
             // add after
             for(var i=0; i< lineMatch.After.length;i++){
                 lines[lineMatch.LineNumber + i +1] = lineMatch.After[i];
-                setShortestLeftPadding(lineMatch.After[i]);
             }
         });
 
 
+        // merge lines into consecutive linenumber groups keyed by first line's number
         var lineNumbers = Object.keys(lines).map(x=> parseInt(x));
         lineNumbers.sort((a,b)=> b -a);
         lineNumbers.forEach(lineNum=>{
@@ -215,11 +210,13 @@ module.exports = (pluginContext) => {
             }
         });
 
+        // build mustache model
         var model = {fileName: payload.fileMatch.Filename,
             matches: Object.keys(lines).map(lineNum=>({
                 firstLineNumber: lineNum,
-                lines : lines[lineNum].map(x=>  x.slice(shortestLeftPadding -1))
+                lines : lines[lineNum]
             }))};
+
 
 
         var htmlPreview = mustache.render(template,model);
