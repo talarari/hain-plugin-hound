@@ -1,2 +1,4 @@
-teamcity hain plugin.    
-shows projects from teamcity server.
+hound hain plugin.
+shows code search results from hound.
+https://github.com/etsy/hound
+
